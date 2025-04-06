@@ -25,12 +25,21 @@ const server = http.createServer(app);
 
 configurePassport(app);
 
+const allowedOrigins = process.env.NODE_ENV === 'production' 
+  ? ['https://holla-web.vercel.app'] 
+  : ['http://localhost:3000']; // or whatever your dev origin is
+
 const corsConfig = {
   credentials: true,
-  origin: true,
+  origin: "https://holla-web.vercel.app", // Match your frontend
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 };
 
 app.use(cors(corsConfig));
+// Add this before your Socket.IO initialization
+app.options('*', cors(corsConfig)); // Handle all OPTIONS requests
+
 
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -45,7 +54,7 @@ connectToDb().then(() => {
 
   //Start the server
   server.listen(port, () => {
-    console.log(`[server]: Server is running at https://localhost:${port}`);
+    console.log(`[server]: ${port}`);
   });
 });
 
@@ -61,9 +70,12 @@ const io = new Server<
 >(server, {
   cookie: true,
   cors: {
-    origin: "*",
+    origin: "https://holla-web.vercel.app",
+    methods: ["GET", "POST", "OPTIONS"], // Explicitly allow OPTIONS
+    allowedHeaders: ["Authorization", "Content-Type"],
     credentials: true,
   },
+  transports: ['websocket', 'polling'],
 });
 
 io.use(socketWrapper(passport.initialize()));

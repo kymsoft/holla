@@ -83,7 +83,7 @@ const Register = () => {
       </Group>
 
       <Title align="center" className="font-bold">
-        Welcome to Chatify, register with
+        Welcome to Holla, register with
       </Title>
 
       <Text color="dimmed" size="sm" align="center" mt={5}>

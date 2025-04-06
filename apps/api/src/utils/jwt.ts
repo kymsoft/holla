@@ -67,9 +67,10 @@ export const issueJWT = ({ user, res }: { user: IUserDoc; res: Response }) => {
 
   //set the JWT in the cookie in httpOnly mode so that it cannot be accessed by the client to avoid XSS attacks
   res.cookie("access-token", token, {
-    httpOnly: false, //No http only, as we need this to be accessible by the client
-    secure: false, //No https, as we are not using https in development
-    //expires in 2 weeks
-    maxAge: 1000 * 60 * 60 * 24 * 14,
+    httpOnly: true, // Keeps token inaccessible to client-side JS for security
+    secure: true, // Ensures cookie is only sent over HTTPS
+    sameSite: "none", // Prevents CSRF (adjust to "Lax" or "None" if cross-site needed)
+    maxAge: 1000 * 60 * 60 * 24 * 14, // 2 weeks
   });
+  
 };

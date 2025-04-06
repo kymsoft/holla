@@ -46,7 +46,7 @@ export const Header = ({ onChange, opened }: IHeaderProps) => {
           <Group spacing="xs">
             <Logo size={32} />
 
-            <div className="hidden text-xl font-semibold md:block">Chatify</div>
+            <div className="hidden text-xl font-semibold md:block">Holla</div>
           </Group>
         </Link>
 

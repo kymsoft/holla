@@ -51,7 +51,7 @@ const Login = () => {
         </Group>
 
         <Title align="center" className="font-bold">
-          Welcome back to Chatify!
+          Welcome back to Holla!
         </Title>
 
         <Text color="dimmed" size="sm" align="center" mt={5}>
